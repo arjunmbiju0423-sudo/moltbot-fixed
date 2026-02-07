@@ -63,7 +63,7 @@ interface CDPSession {
 /**
  * GET /cdp - WebSocket upgrade endpoint
  * 
- * Connect with: ws://host/cdp?secret=<CDP_SECRET>
+ * Connect with: ws://host/cdp?secret=<MOLTBOT_GATEWAY_TOKEN>
  */
 cdp.get('/', async (c) => {
   // Check for WebSocket upgrade
@@ -71,7 +71,7 @@ cdp.get('/', async (c) => {
   if (upgradeHeader?.toLowerCase() !== 'websocket') {
     return c.json({
       error: 'WebSocket upgrade required',
-      hint: 'Connect via WebSocket: ws://host/cdp?secret=<CDP_SECRET>',
+      hint: 'Connect via WebSocket: ws://host/cdp?secret=<MOLTBOT_GATEWAY_TOKEN>',
       supported_methods: [
         // Browser
         'Browser.getVersion',
@@ -155,12 +155,12 @@ cdp.get('/', async (c) => {
   // Verify secret from query param
   const url = new URL(c.req.url);
   const providedSecret = url.searchParams.get('secret');
-  const expectedSecret = c.env.CDP_SECRET;
+  const expectedSecret = c.env.MOLTBOT_GATEWAY_TOKEN;
 
   if (!expectedSecret) {
     return c.json({
       error: 'CDP endpoint not configured',
-      hint: 'Set CDP_SECRET via: wrangler secret put CDP_SECRET',
+      hint: 'Set MOLTBOT_GATEWAY_TOKEN via: wrangler secret put MOLTBOT_GATEWAY_TOKEN',
     }, 503);
   }
 
@@ -198,18 +198,18 @@ cdp.get('/', async (c) => {
  * GET /json/version - CDP discovery endpoint
  * 
  * Returns browser version info and WebSocket URL for Moltbot/Playwright compatibility.
- * Authentication: Pass secret as query param `?secret=<CDP_SECRET>`
+ * Authentication: Pass secret as query param `?secret=<MOLTBOT_GATEWAY_TOKEN>`
  */
 cdp.get('/json/version', async (c) => {
   // Verify secret from query param
   const url = new URL(c.req.url);
   const providedSecret = url.searchParams.get('secret');
-  const expectedSecret = c.env.CDP_SECRET;
+  const expectedSecret = c.env.MOLTBOT_GATEWAY_TOKEN;
 
   if (!expectedSecret) {
     return c.json({
       error: 'CDP endpoint not configured',
-      hint: 'Set CDP_SECRET via: wrangler secret put CDP_SECRET',
+      hint: 'Set MOLTBOT_GATEWAY_TOKEN via: wrangler secret put MOLTBOT_GATEWAY_TOKEN',
     }, 503);
   }
 
@@ -244,18 +244,18 @@ cdp.get('/json/version', async (c) => {
  * Returns a list of available browser targets for Moltbot/Playwright compatibility.
  * Note: Since we create targets on-demand per WebSocket connection, this returns
  * a placeholder target that will be created when connecting.
- * Authentication: Pass secret as query param `?secret=<CDP_SECRET>`
+ * Authentication: Pass secret as query param `?secret=<MOLTBOT_GATEWAY_TOKEN>`
  */
 cdp.get('/json/list', async (c) => {
   // Verify secret from query param
   const url = new URL(c.req.url);
   const providedSecret = url.searchParams.get('secret');
-  const expectedSecret = c.env.CDP_SECRET;
+  const expectedSecret = c.env.MOLTBOT_GATEWAY_TOKEN;
 
   if (!expectedSecret) {
     return c.json({
       error: 'CDP endpoint not configured',
-      hint: 'Set CDP_SECRET via: wrangler secret put CDP_SECRET',
+      hint: 'Set MOLTBOT_GATEWAY_TOKEN via: wrangler secret put MOLTBOT_GATEWAY_TOKEN',
     }, 503);
   }
 
@@ -298,12 +298,12 @@ cdp.get('/json', async (c) => {
   
   // Verify secret from query param
   const providedSecret = url.searchParams.get('secret');
-  const expectedSecret = c.env.CDP_SECRET;
+  const expectedSecret = c.env.MOLTBOT_GATEWAY_TOKEN;
 
   if (!expectedSecret) {
     return c.json({
       error: 'CDP endpoint not configured',
-      hint: 'Set CDP_SECRET via: wrangler secret put CDP_SECRET',
+      hint: 'Set MOLTBOT_GATEWAY_TOKEN via: wrangler secret put MOLTBOT_GATEWAY_TOKEN',
     }, 503);
   }
 
