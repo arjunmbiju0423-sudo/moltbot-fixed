@@ -63,4 +63,14 @@ publicRoutes.get('/_admin/assets/*', async (c) => {
   return c.env.ASSETS.fetch(new Request(assetUrl.toString(), c.req.raw));
 });
 
+// GET /api/gateway-token - Public endpoint to get the gateway token for WebSocket connection
+publicRoutes.get('/api/gateway-token', (c) => {
+  const token = c.env.MOLTBOT_GATEWAY_TOKEN;
+  if (!token) {
+    return c.json({ error: 'Gateway token not configured' }, 500);
+  }
+  return c.json({ token });
+});
+
+
 export { publicRoutes };
