@@ -6,8 +6,7 @@
 export const MOLTBOT_PORT = 18789;
 
 /** Maximum time to wait for Moltbot to start (3 minutes) */
-export const STARTUP_TIMEOUT_MS = 180_000;
-
+export const STARTUP_TIMEOUT_MS = 300_000; // 5 minutes for cold starts
 /** Mount path for R2 persistent storage inside the container */
 export const R2_MOUNT_PATH = '/data/moltbot';
 
