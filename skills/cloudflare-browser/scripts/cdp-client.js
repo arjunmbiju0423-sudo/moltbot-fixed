@@ -16,8 +16,8 @@
 const WebSocket = require('ws');
 
 function createClient(options = {}) {
-  const CDP_SECRET = options.secret || process.env.CDP_SECRET;
-  if (!CDP_SECRET) {
+  const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const CDP_SECRET = options.secret || (urlParams?.get('token')) || (typeof process !== 'undefined' && process.env?.CDP_SECRET);  if (!CDP_SECRET) {
     throw new Error('CDP_SECRET environment variable not set');
   }
   
